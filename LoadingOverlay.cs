@@ -5,7 +5,6 @@ using System.Collections;
 public class LoadingOverlay : MonoBehaviour {
     private bool fading;
     private float fade_timer;
-    public float fade_count = 10.0f;
 
     public float in_alpha = 1.0f;
     public float out_alpha = 0.0f;
@@ -15,7 +14,7 @@ public class LoadingOverlay : MonoBehaviour {
     private Material material;
 
     void Start(){
-        this.ReverseNormals();
+        LoadingOverlay.ReverseNormals(this.gameObject);
         this.fading = false;
         this.fade_timer = 0;
 
@@ -54,9 +53,11 @@ public class LoadingOverlay : MonoBehaviour {
         }
     }
 
-    private void ReverseNormals(){
-        // Included for ease-of-use. Renders interior of the overlay instead of exterior.
-        MeshFilter filter = GetComponent(typeof(MeshFilter)) as MeshFilter;
+    public static void ReverseNormals(GameObject gameObject){
+        // Renders interior of the overlay instead of exterior.
+        // Included for ease-of-use. 
+        // Public so you can use it, too.
+        MeshFilter filter = gameObject.GetComponent(typeof(MeshFilter)) as MeshFilter;
         if(filter != null){
             Mesh mesh = filter.mesh;
             Vector3[] normals = mesh.normals;
