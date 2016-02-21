@@ -1,62 +1,62 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(MeshFilter))]
 public class LoadingOverlay : MonoBehaviour {
-	private bool fading;
-	private float fade_timer;
-	public float fade_count = 10.0f;
+    private bool fading;
+    private float fade_timer;
+    public float fade_count = 10.0f;
 
-	public float in_alpha = 1.0f;
-	public float out_alpha = 0.0f;
+    public float in_alpha = 1.0f;
+    public float out_alpha = 0.0f;
 
-	private Color from_color;
-	private Color to_color;
-	private Material material;
+    private Color from_color;
+    private Color to_color;
+    private Material material;
 
-	void Start(){
-		this.ReverseNormals();
-		this.fading = false;
-		this.fade_timer = 0;
+    void Start(){
+        this.ReverseNormals();
+        this.fading = false;
+        this.fade_timer = 0;
 
-		this.material = this.gameObject.GetComponent<Renderer>().material;
-		this.from_color = this.material.color;
-		this.to_color = this.material.color;
-	}
-	
-	void Update(){
-		if(this.fading == false)
-			return;
+        this.material = this.gameObject.GetComponent<Renderer>().material;
+        this.from_color = this.material.color;
+        this.to_color = this.material.color;
+    }
+    
+    void Update(){
+        if(this.fading == false)
+            return;
 
-		this.fade_timer += Time.deltaTime;
-		this.material.color = Color.Lerp(this.from_color, this.to_color, this.fade_timer);
-		if(this.material.color == this.to_color){
-			this.fading = false;
-			this.fade_timer = 0;
-		}
-	}
+        this.fade_timer += Time.deltaTime;
+        this.material.color = Color.Lerp(this.from_color, this.to_color, this.fade_timer);
+        if(this.material.color == this.to_color){
+            this.fading = false;
+            this.fade_timer = 0;
+        }
+    }
 
-	public void FadeOut(){
-		// Fade the overlay to `out_alpha`.
-		this.from_color.a = this.in_alpha;
-		this.to_color.a = this.out_alpha;
-		if(this.to_color != this.material.color){
-			this.fading = true;
-		}
-	}
+    public void FadeOut(){
+        // Fade the overlay to `out_alpha`.
+        this.from_color.a = this.in_alpha;
+        this.to_color.a = this.out_alpha;
+        if(this.to_color != this.material.color){
+            this.fading = true;
+        }
+    }
 
-	public void FadeIn(){
-		// Fade the overlay to `in_alpha`.
-		this.from_color.a = this.out_alpha;
-		this.to_color.a = this.in_alpha;
-		if(this.to_color != this.material.color){
-			this.fading = true;
-		}
-	}
+    public void FadeIn(){
+        // Fade the overlay to `in_alpha`.
+        this.from_color.a = this.out_alpha;
+        this.to_color.a = this.in_alpha;
+        if(this.to_color != this.material.color){
+            this.fading = true;
+        }
+    }
 
-	private void ReverseNormals(){
-		// Included for ease-of-use. Renders interior of the overlay instead of exterior.
-		MeshFilter filter = GetComponent(typeof(MeshFilter)) as MeshFilter;
+    private void ReverseNormals(){
+        // Included for ease-of-use. Renders interior of the overlay instead of exterior.
+        MeshFilter filter = GetComponent(typeof(MeshFilter)) as MeshFilter;
         if(filter != null){
             Mesh mesh = filter.mesh;
             Vector3[] normals = mesh.normals;
@@ -74,5 +74,5 @@ public class LoadingOverlay : MonoBehaviour {
                 mesh.SetTriangles(triangles, m);
             }
         }
-	}
+    }
 }
