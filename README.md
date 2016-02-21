@@ -3,6 +3,9 @@
 
 Very simple fade-to-black (and back) overlay system for Virtual Reality applications (Oculus DK2 tested) in Unity 5. Useful as a graceful transition for intial environment loading and level switching.
 
+## Compatibility
+References a Shader from the Oculus VR SDK: `"Oculus/Unlit Transparent Color"` found in the `OVR/Moonlight/Resources` folder.
+
 ## Usage
 Drag the `LoadingOverlay` prefab to your main camera.
 
